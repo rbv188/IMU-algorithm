@@ -24,6 +24,7 @@ float vector_3d_dot_product(vector_ijk v1, vector_ijk v2);
 vector_ijk vector_3d_cross_product(vector_ijk v1, vector_ijk v2);
 vector_ijk vector_3d_normalize(vector_ijk v);
 vector_ijk vector_3d_scale(vector_ijk v1, float scale);
+float InvSqrt(float x);
 
 #endif
 

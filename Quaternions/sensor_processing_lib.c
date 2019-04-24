@@ -8,10 +8,12 @@ Quaternion quaternion_from_accelerometer(float ax, float ay, float az)
     return orientation;*/
     float norm_u_norm_v = 1.0;
     float cos_theta = -1.0*az;
-    float half_cos = sqrt(0.5*(1.0 + cos_theta));
+    //float half_cos = sqrt(0.5*(1.0 + cos_theta));
+    float half_cos = 0.7071*sqrt(1.0 + cos_theta);
     Quaternion orientation;
     orientation.a = half_cos;
-    float temp = 1/(2.0*half_cos);
+    //float temp = 1/(2.0*half_cos);
+    float temp = 0.5/half_cos;
     orientation.b = -ay*temp;
     orientation.c = ax*temp;
     orientation.d = 0.0;
@@ -20,12 +22,12 @@ Quaternion quaternion_from_accelerometer(float ax, float ay, float az)
 
 Quaternion quaternion_from_gyro(float wx, float wy, float wz, float time)
 {
-    // wx,wy,wz in degrees per second: time in seconds
+    // wx,wy,wz in radians per second: time in seconds
     float alpha = 0.5*time;
     float a,b,c,d;
-    b = alpha*(-wx)*0.017;
-    c = alpha*(-wy)*0.017;
-    d = alpha*(-wz)*0.017;
+    b = alpha*(-wx);
+    c = alpha*(-wy);
+    d = alpha*(-wz);
     a = 1 - 0.5*(b*b+c*c+d*d);
     Quaternion result = quaternion_initialize(a,b,c,d);
     return result;
