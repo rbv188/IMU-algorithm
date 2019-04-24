@@ -35,12 +35,12 @@ Quaternion quaternion_conjugate(Quaternion q1)
 Quaternion quaternion_normalize(Quaternion q1)
 {
     Quaternion q2;
-    float mag;
-    mag = sqrt(q1.a*q1.a + q1.b*q1.b + q1.c*q1.c + q1.d*q1.d);
-    q2.a = q1.a/mag;
-    q2.b = q1.b/mag;
-    q2.c = q1.c/mag;
-    q2.d = q1.d/mag;
+    float one_by_sqrt;
+    one_by_sqrt = InvSqrt(q1.a*q1.a + q1.b*q1.b + q1.c*q1.c + q1.d*q1.d);
+    q2.a = q1.a*one_by_sqrt;
+    q2.b = q1.b*one_by_sqrt;
+    q2.c = q1.c*one_by_sqrt;
+    q2.d = q1.d*one_by_sqrt;
     return q2;
 }
 
