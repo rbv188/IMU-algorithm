@@ -1,5 +1,5 @@
 # IMU-algorithm
-A sensor fusion algorithm to determine roll and pitch in 6-DOF IMU. Only roll and pitch values are determined, yaw values are not estimated.
+A sensor fusion algorithm to determine roll and pitch in 6-DOF IMU.
 
 # Demo
 A demonstration using an Arduino Uno, MPU6050 and Processing software. 
