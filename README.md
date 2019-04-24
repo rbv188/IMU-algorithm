@@ -6,10 +6,6 @@ A demonstration using an Arduino Uno, MPU6050 and Processing software.
 
 ![Alt text](https://github.com/rbv188/IMU-algorithm/blob/master/demo_gifs/gif_1.gif)
 
-Response to vibrations and disturbances
-
-![Alt text](https://github.com/rbv188/IMU-algorithm/blob/master/demo_gifs/gif_2.gif)
-
 # Reference/Credits/Sources
 
 [Keeping a Good Attitude: A Quaternion-Based Orientation Filter for IMUs and MARGs](https://www.mdpi.com/1424-8220/15/8/19302)
