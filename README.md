@@ -2,7 +2,7 @@
 A sensor fusion algorithm to determine roll and pitch in 6-DOF IMU.
 
 # Demo
-Demonstration using an Arduino Uno, MPU6050(without DMP support) and Processing software. 
+Demonstration using an Arduino Uno, MPU6050 (without DMP support) and Processing software. 
 
 ![Alt text](https://github.com/rbv188/IMU-algorithm/blob/master/demo_gifs/gif_1.gif)
 
