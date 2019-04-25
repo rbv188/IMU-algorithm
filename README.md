@@ -30,7 +30,7 @@ q_acc = quaternion_from_accelerometer(fused_vector.a,fused_vector.b,fused_vector
 angles = quaternion_to_euler_angles(q_acc);
 ```
 
-The library uses an approximation for 1/sqrt(x) (in vector_3d.c) which may not work on all machines. The definition of the function must be changed in some hardware.  
+The library uses an approximation for 1/sqrt(x) (in vector_3d.c) which may not work on all machines. The definition of the function may have to be changed in some hardware.  
 
 # Reference/Credits/Sources
 
