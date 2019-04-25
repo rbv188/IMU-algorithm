@@ -6,6 +6,32 @@ A demonstration using an Arduino Uno, MPU6050 and Processing software.
 
 ![Alt text](https://github.com/rbv188/IMU-algorithm/blob/master/demo_gifs/gif_1.gif)
 
+# Working
+The orientation is calculated as a quaternion that rotates the gravity vector from earth frame to sensor frame. The gravity vector in the sensor frame is the accelerometer readings and the gravity vector in earth frame is (0,0,-1).
+
+The accelerometer values are sensitive to vibrations. The gyroscope is used to keep track of the gravity vector and correct the accelerometer readings.
+
+# Usage
+To use the library, read the accelerometer, gyro values, and calculate the time taken to complete a loop.
+
+```C
+/*
+wx,wy,wz - gyro values in rad/s
+AcX, AcY, AcZ - raw accelerometer values
+fused_vector - corrected accelerometer readings
+delta - delay or time taken to complete a loop
+*/
+delta = 0.001*(millis()-Start); //calculate delay (Arduino implementation)
+virtual_gravity = update_gravity_vector(fused_vector,wx,wy,wz,delta);
+sensor_gravity = sensor_gravity_normalized(AcX,AcY,AcZ);
+fused_vector = fuse_vector(virtual_gravity,sensor_gravity);
+  
+q_acc = quaternion_from_accelerometer(fused_vector.a,fused_vector.b,fused_vector.c);
+angles = quaternion_to_euler_angles(q_acc);
+```
+
+The library uses an approximation for 1/sqrt(x) (in vector_3d.c) which may not work on all machines. The definition of the function must be changed in some hardware.  
+
 # Reference/Credits/Sources
 
 [Beautiful maths simplification: quaternion from two vectors](http://lolengine.net/blog/2013/09/18/beautiful-maths-quaternion-from-vectors)
