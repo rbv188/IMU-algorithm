@@ -16,15 +16,16 @@ To use the library, read the accelerometer, gyro values, and calculate the time 
 
 ```C
 /*
-wx,wy,wz - gyro values in rad/s
-AcX, AcY, AcZ - raw accelerometer values
 fused_vector - corrected accelerometer readings
 delta - delay or time taken to complete a loop
+wx,wy,wz - gyro values in rad/s
+AcX, AcY, AcZ - raw accelerometer values
+q_acc - quaternion representing orientation
+angles - euler angles
 */
-delta = 0.001*(millis()-Start); //calculate delay (Arduino implementation)
-virtual_gravity = update_gravity_vector(fused_vector,wx,wy,wz,delta);
-sensor_gravity = sensor_gravity_normalized(AcX,AcY,AcZ);
-fused_vector = fuse_vector(virtual_gravity,sensor_gravity);
+
+delta = 0.001*(millis()-Start);
+fused_vector = update_fused_vector(fused_vector,AcX,AcY,AcZ,wx,wy,wz,delta);
   
 q_acc = quaternion_from_accelerometer(fused_vector.a,fused_vector.b,fused_vector.c);
 angles = quaternion_to_euler_angles(q_acc);
