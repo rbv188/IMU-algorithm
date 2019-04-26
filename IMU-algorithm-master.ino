@@ -8,7 +8,7 @@ int16_t AcX=0,AcY=0,AcZ=1,Tmp,GyX=0,GyY=0,GyZ=0,count=0;
 unsigned long Start = 0,loop_start,temp2;
 float delta,wx,wy,wz;
 euler_angles angles;
-vector_ijk virtual_gravity,sensor_gravity,fused_vector;
+vector_ijk fused_vector;
 Quaternion q_acc;
 
 void setup(){
@@ -27,30 +27,28 @@ void setup(){
   Wire.endTransmission(true);
   Serial.begin(115200);
   Start = millis(); 
-  virtual_gravity = vector_3d_initialize(0.0,0.0,-1.0);
+  fused_vector = vector_3d_initialize(0.0,0.0,-1.0);
   q_acc = quaternion_initialize(1.0,0.0,0.0,0.0);
   loop_start = millis();
 }
 void loop(){
   
-  wx = 0.03*GyX;
-  wy = 0.03*GyY;
-  wz = 0.03*GyZ;
+  wx = 0.0005323*GyX;
+  wy = 0.0005323*GyY;
+  wz = 0.0005323*GyZ;
   
   delta = 0.001*(millis()-Start);
-  virtual_gravity = update_gravity_vector(fused_vector,wx,wy,wz,delta);
-  sensor_gravity = sensor_gravity_normalized(AcX,AcY,AcZ);
-  fused_vector = fuse_vector(virtual_gravity,sensor_gravity);
+  fused_vector = update_fused_vector(fused_vector,AcX,AcY,AcZ,wx,wy,wz,delta);
   
   q_acc = quaternion_from_accelerometer(fused_vector.a,fused_vector.b,fused_vector.c);
   angles = quaternion_to_euler_angles(q_acc);
-
-  Start = millis();
 
   Serial.print("A ");
   Serial.print(int(angles.yaw));Serial.print(" ");
   Serial.print(int(angles.pitch));Serial.print(" ");
   Serial.println(int(angles.roll));
+
+  Start = millis();
 
   Wire.beginTransmission(MPU_addr);
   Wire.write(0x3B);  // starting with register 0x3B (ACCEL_XOUT_H)
@@ -63,4 +61,13 @@ void loop(){
   GyX=Wire.read()<<8|Wire.read();  // 0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
   GyY=Wire.read()<<8|Wire.read();  // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
   GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
+
+  /*count += 1;
+  if (count>=500)
+  {
+    temp2 = millis()-loop_start;
+    loop_start = millis();
+    Serial.println(temp2);
+    count = 0;
+  }*/
 }
