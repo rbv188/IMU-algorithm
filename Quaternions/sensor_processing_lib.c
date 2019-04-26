@@ -68,3 +68,11 @@ vector_ijk update_gravity_vector(vector_ijk gravity_vector,float wx,float wy,flo
     gravity_vector = quaternion_rotate_vector(gravity_vector,q_gyro);
     return gravity_vector;
 }
+
+vector_ijk update_fused_vector(vector_ijk fused_vector, int16_t ax, int16_t ay, int16_t az,float wx,float wy,float wz,float delta)
+{
+    vector_ijk virtual_gravity = update_gravity_vector(fused_vector,wx,wy,wz,delta);
+    vector_ijk sensor_gravity = sensor_gravity_normalized(ax,ay,az);
+    fused_vector = fuse_vector(virtual_gravity,sensor_gravity);
+    return fused_vector;
+}
